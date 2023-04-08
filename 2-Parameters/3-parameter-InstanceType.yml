@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  SSHKeyName: 
+    Description: AWS SSH Key Name to use in Ec2 Instance
+    Type: "AWS::EC2::KeyPair::KeyName"
+    Default: cfkey
+  AvailabilityZone:
+    Description: Availability zone for ec2
+    Type: String
+    Default: us-east-1a
+  InstanceType:
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t3.micro
+    Description: Enter t2.micro, m1.small, or m1.large. Default is t2.micro.
+    Type: String
+    Default: t2.micro
+
+Resources:
+  DevEC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: ami-00c39f71452c08778
+      InstanceType: 
+        Ref: InstanceType
+      KeyName: !Ref SSHKeyName
+      AvailabilityZone:
+         Ref:  AvailabilityZone
+
+      Tags:
+        - Key: Name
+          Value: Ec2DemoTest
+        - Key: Environment
+          Value: Test

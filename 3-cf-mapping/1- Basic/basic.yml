@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Select the keypair
+
+Mappings:
+  Region: 
+    us-east-1:
+      ImageID: ami-00c39f71452c08778
+    us-west-1:
+      ImageID: ami-09c5c62bac0d0634e
+
+Resources:
+  Myec2CfTf:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap
+        - Region
+        - !Ref 'AWS::Region'
+        - ImageID
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      SecurityGroups:
+        - default
+
+      Tags:
+        - Key: Name
+          Value: Ec2DemoTest
+        - Key: Environment
+          Value: Test

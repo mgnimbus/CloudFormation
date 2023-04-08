@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  DevEC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: ami-00c39f71452c08778
+      InstanceType: t2.micro
+      KeyName: cfkey
+      SecurityGroups:
+        - default
+
+      Tags:
+        - Key: Name
+          Value: Ec2DemoTest
+        - Key: Environment
+          Value: Test
